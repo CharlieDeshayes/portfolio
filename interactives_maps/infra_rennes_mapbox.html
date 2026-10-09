@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html>
+<head>
+<metacharset='utf-8' />
+<title>MapboxGL</title>
+<script src='https://api.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.js'></script>
+<link href='https://api.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.css' rel='stylesheet' />
+<style>
+
+#map {
+  position:absolute; 
+  top: 0; 
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.map-title {
+  position: absolute;
+  top: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+
+  font-family: "Inter", "Helvetica Neue", Arial, sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+
+  color: #fff;
+  background: rgba(20, 20, 20, 0.4);
+  backdrop-filter: blur(6px);
+
+  padding: 6px 12px;
+  border-radius: 10px;
+
+  z-index: 9999;
+}
+
+.metro .mapboxgl-popup-content {
+background-color: black;
+color: white;
+opacity: 0.9;
+text-align: center;
+font-family: 'serif';
+}
+.metro .mapboxgl-popup-tip {
+    border-top-color: black;
+    opacity: 0.7;
+  }
+
+
+.bus .mapboxgl-popup-content {
+background-color: white;
+color: blue;
+opacity: 0.7;
+text-align: center;
+}
+
+.map-overlay-2 {
+            font: 14px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
+            position: absolute;
+            width: min(320px, 28vw);   /* responsive propre */;
+            max-height: calc(100vh - 20px);
+            top: 10px;
+            left: 10px;
+            padding: 10px;
+            opacity: 0.8;
+            color:white;
+            display: flex;
+        }
+
+        .map-overlay-2 .map-overlay-inner {
+            background-color: rgba(80, 80, 80, 0.85);
+            backdrop-filter: blur(6px);
+            box-shadow:0 1px 3px rgba(0, 0, 0, 0.10);
+            border-radius: 25px;
+            padding: 10px;
+            margin-bottom: 10px;
+            font-size: 12px;
+            width: 100%;
+            max-height: calc(100vh - 40px);
+            overflow-y: auto;   /* clé */
+            box-sizing: border-box;
+        }
+
+        .map-overlay-inner fieldset {
+            border: none;
+            padding: 5px;
+            margin: 0 0 10px;
+        }
+
+        .map-overlay-inner .categoryLabel {
+            display: block;
+            font-weight: bold;
+            margin: 0 0 10px;
+            font-size: 14px;
+        }
+
+        .map-overlay-inner fieldset div {
+            border: none;
+            padding: 3px;
+            margin: 0 0 5px;
+        }
+        .map-overlay-inner button {
+            border: none;
+            margin: 0 0 5px;
+            padding: 8px 10px;
+            border-radius: 4px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.3);
+            transition: all 0.2s ease;
+        }
+
+        .map-overlay-inner button:hover {
+            background: #ABA2A2;
+        }
+
+</style>
+</head>
+
+<body>
+<div id='map'> </div>
+
+<div class="map-title">
+  Visualisation des infrastructures rennaise
+</div>
+
+<div class='map-overlay-2 top'>
+
+   <div class='map-overlay-inner'>
+        <div>
+            <button id='3D'>Passer en 3D</button>
+        </div>
+        <label class="categoryLabel">Zoom sur une zone</label>
+        <div>
+            <button id='Gare'>Quartier Gare-Centre</button>
+            <button id='Rennes1'>Université Rennes 1</button>
+            <button id='Rennes2'>Université Rennes 2</button>
+        </div>
+        
+       <fieldset>
+           <label class="categoryLabel">Données Réferentielles</label>
+           <div>
+               <input type="checkbox" id="RoutesPCB" value="RoutesP" onchange="switchlayer(this, ['RoutesP', 'RoutesP-casing'])" >
+               <label for="RoutesPCB">Routes principales</label>
+           </div>
+
+           <div>
+            <input type="checkbox" id="RoutesSecondCB" value="RoutesSecond" onchange="switchlayer(this, ['RoutesSecond', 'RoutesSecond-casing'])" />
+            <label for="RoutesSecondCB">Routes secondaires</label>
+            </div>
+
+           <div>
+            <input type="checkbox" id="BatimentsCB" value="Batiments" onchange="switchlayer(this, ['Batiments'])" >
+            <label for="BatimentsCB">Batiments</label>
+        </div>
+       </fieldset>
+       <hr>
+       <fieldset>
+           <label class="categoryLabel">Données métier</label>
+           <div>
+               <input type="checkbox" id="parcCB" value="parc" onchange="switchlayer(this, ['parc'])" >
+               <label for="parcCB">Parcs</label>
+           </div>
+
+           <div>
+               <input type="checkbox" id="cadastreCB" value="cadastre" onchange="switchlayer(this, ['cadastre'])" >
+               <label for="cadastreCB">Parcelles cadastrales</label>
+           </div>
+
+           <!-- <div>
+            <input type="checkbox" id="busCB" value="bus" onchange="switchlayer(this, ['bus'])" >
+            <label for="busCB">Arrêts de bus</label>
+           </div> -->
+       </fieldset>
+       <hr>
+       <fieldset>
+           <label class="categoryLabel">Réseau de métro</label>
+           <div>
+               <input type="checkbox" id="lignesCB" value="lignes" onchange="switchlayer(this, ['lignes'])"checked />
+               <label for="lignesCB">Lignes de métro</label>
+           </div>
+
+            <div>
+            <input type="checkbox" id="StationsCB" value="Stations" onchange="switchlayer(this, ['Stations'])" checked/>
+            <label for="StationsCB">Stations de métro</label>
+            </div>
+       </fieldset>
+   </div>
+
+</div>
+
+
+</div>
+<script>
+
+// Variables
+let is3D = false;
+
+// AccesToken
+mapboxgl.accessToken= 'pk.eyJ1IjoiY2hhcmxpZS1kaHMiLCJhIjoiY21xdGQ5YngzMGN6dzJ0c2JxZ2l6MTEzdiJ9.x8VKSrXgHUMd-dvRiHyTaA';
+
+// Configuration de la carte
+var map = new mapboxgl.Map({
+container: 'map',
+style: 'mapbox://styles/charlie-dhs/ckyvenrmd002u14t8vxi21mwc', // Fond de carte
+center: [-1.67, 48.11], // lat/long 
+zoom: 13,
+pitch: 10,
+bearing: 0,
+minZoom:12, // dezoom max 
+// customAttribution: '<a href="https://esigat.wordpress.com/">Deshayes Charlie' // gérer les attributions 
+});
+
+// Appel de données OSM 
+
+map.on('load', function() {
+
+ // ajout de la source
+map.addSource('mapbox-streets-v8', {
+type: 'vector',
+url: 'mapbox://mapbox.mapbox-streets-v8'});
+
+
+// Test render road
+map.addLayer({
+  id: "RoutesP-casing",
+  type: "line",
+  source: "mapbox-streets-v8",
+  "source-layer": "road",
+  filter: ["in", "class", "motorway", "trunk", "primary"],
+  layout: {
+    'visibility': 'none',
+    'line-cap':'round',
+    'line-join':'round'
+  },
+  paint: {
+    "line-color": "#b36a2e",
+    "line-width": ["interpolate", ["linear"], ["zoom"], 5, 1, 10, 3, 15, 6],
+    "line-opacity": 1
+  }
+});
+
+map.addLayer({
+  id: "RoutesP",
+  type: "line",
+  source: "mapbox-streets-v8",
+  "source-layer": "road",
+  filter: ["in", "class", "motorway", "trunk", "primary"],
+  layout: {
+    'visibility': 'none',
+    'line-cap':'round',
+    'line-join':'round'
+  },
+  paint: {
+    "line-color": "#f2a65a",
+    "line-width": ["interpolate", ["linear"], ["zoom"], 5, 0.5, 10, 2.5, 15, 5]
+  }
+});
+
+map.addLayer({
+  id: "RoutesSecond-casing",
+  type: "line",
+  source: "mapbox-streets-v8",
+  "source-layer": "road",
+  filter: ["in", "class", "secondary", "tertiary"],
+  layout: {
+    'visibility': 'none',
+    'line-cap':'round',
+    'line-join':'round'
+  },
+  paint: {
+    "line-color": "#c9c9c9",
+    "line-width": ["interpolate", ["linear"], ["zoom"], 5, 0.8, 10, 2, 15, 4]
+  }
+});
+
+map.addLayer({
+  id: "RoutesSecond",
+  type: "line",
+  source: "mapbox-streets-v8",
+  "source-layer": "road",
+  filter: ["in", "class", "secondary", "tertiary"],
+  layout: {
+    'visibility': 'none',
+    'line-cap':'round',
+    'line-join':'round'
+  },
+  paint: {
+    "line-color": "#ffffff",
+    "line-width": ["interpolate", ["linear"], ["zoom"], 5, 0.3, 10, 1.5, 15, 3],
+    "line-dasharray": [4, 2]
+  }
+});
+
+// Parcs 
+map.addLayer({
+"id": "parc",
+"type": "fill",
+"source": "mapbox-streets-v8",
+"source-layer": "landuse",
+"filter": ['==','class','park'], 
+"layout": {'visibility': 'none'}, 
+"paint": {
+  "fill-color": "#cfe5b0",
+  "fill-outline-color": "#b7d38d",
+  "fill-opacity": 1}
+});
+
+
+// Ajout de datas personnelles 
+
+// bus
+// map.addSource('bus_stop', {
+// type: 'vector',
+// url: 'mapbox://charlie-dhs.go1zedhd4lwc'});
+
+// map.addLayer({
+// id: 'bus',
+// type: 'circle',
+// source: 'bus_stop',
+// "source-layer": 'e6835abee9a52d03eef3',
+// layout: {'visibility': 'none'},
+// paint: {
+//     'circle-radius': [
+//         'interpolate',
+//         ['linear'],
+//         ['zoom'],
+//         12, 5,
+//         16, 7
+//     ],
+//     'circle-color': '#4285F4',
+//     'circle-stroke-color': '#FFFFFF',
+//     'circle-stroke-width': 2
+// },
+// minzoom:12 });
+
+// Organismes
+// map.addSource('orga', {
+// type: 'vector',
+// url: 'mapbox://charlie-dhs.5v7izxy8'});
+
+// map.addLayer({
+// 'id': 'orga',
+// 'type': 'circle',
+// 'source': 'orga',
+// 'source-layer': 'base-orga-var-3ji43u',
+// 'layout': {'visibility': 'none'},
+// 'paint': {'circle-radius': {'base': 1.5,'stops': [[13, 2], [16, 4]]}, 'circle-color': '#000000','circle-opacity' :0.5, 'circle-stroke-color': '#ffffff', 'circle-stroke-width': 1}, minzoom:14 });
+
+
+//BATIMENTS
+map.addSource('Batiments', {
+type: 'vector',
+url: 'mapbox://mastersigat.a4h4ovrl'
+});
+
+map.addLayer({
+'id': 'Batiments',
+'type': 'fill-extrusion',
+'source': 'Batiments',
+'source-layer': 'batiIGN-8zf03o',
+'layout': {'visibility': 'none'},
+'paint':
+  {'fill-extrusion-color': [
+      'interpolate',
+      ['linear'],
+      ['get', 'HAUTEUR'],
+      0, '#e8e3da',
+      20, '#d9d3c9',
+      50, '#c8c1b5',
+      100, '#b9b1a5'
+    ],
+  'fill-extrusion-height':['get', 'HAUTEUR'],
+  'fill-extrusion-opacity': 0.9,
+  'fill-extrusion-base': 0}
+});
+
+// cadastre
+map.addSource('cadastre', {
+type: 'vector',
+url: 'https://openmaptiles.geo.data.gouv.fr/data/cadastre.json'
+});
+
+map.addLayer({
+'id': 'cadastre',
+'type': 'line',
+'source': 'cadastre',
+'source-layer': 'parcelles',
+'layout': {'visibility': 'none'},
+'paint':{"line-color": "#d3d3d3",
+            "line-width": 0.8}, 'minZoom':17
+});
+
+
+// apport fichier externe 
+
+// Ajout lignes de metros
+map.addSource('lignes', {
+            type: 'geojson',
+            data: 'https://raw.githubusercontent.com/mastersigat/data/main/metro-du-reseau-star-traces-de-laxe-des-lignes.geojson'
+        });
+
+     map.addLayer({
+            'id': 'lignes',
+            'type': 'line',
+            'source': 'lignes',
+            'layout': {'visibility': 'visible'},
+            'paint': {"line-opacity": 0.7, "line-width": 3.5,
+                     "line-color": ['match',['get', 'ligne'],
+                    'a', '#f22e16', 
+                    'b','#30B9F0', 
+                    '#ccc']}
+     });
+
+// metro
+map.addSource('Stations', {
+            type: 'geojson',
+            data: 'https://raw.githubusercontent.com/mastersigat/data/main/metro-du-reseau-star-localisation-des-stations.geojson'
+        });
+
+        map.addLayer({
+            'id': 'Stations',
+            'type': 'circle',
+            'source': 'Stations',
+            'layout': {'visibility': 'visible'},
+            'paint': {
+              'circle-color': ['match',['get', 'ligne'],
+                    'a', '#f22e16',
+                    'b', '#30B9F0',
+                    '#ccc'],"circle-stroke-color" :"white", "circle-stroke-width" : 0.5}
+              }
+                 ); 
+
+
+            switchlayer = function (checkbox, layers) {
+                const isChecked = checkbox.checked;
+
+                layers.forEach(layer => {
+                    map.setLayoutProperty(
+                        layer,
+                        "visibility",
+                        isChecked ? "visible" : "none"
+                    );
+                });
+            };
+
+});
+
+map.on('load', () => {
+  console.log(map.getSource('bus_stop'));
+});
+
+map.on('load', () => {
+  const source = map.getSource('bus_stop');
+  console.log(source.vectorLayers);
+});
+
+// Bouton de navigation
+var nav= new mapboxgl.NavigationControl();
+map.addControl(nav, 'top-right');
+
+// Ajout Echelle cartographique a la fin du script
+map.addControl(new mapboxgl.ScaleControl({
+maxWidth: 120,
+unit: 'metric'}), 'bottom-right');
+
+// geolocalisation de lutilisateur (precis en connexion sur wifi)
+map.addControl(new mapboxgl.GeolocateControl({
+positionOptions: {
+enableHighAccuracy: true
+},
+trackUserLocation: true,
+showUserHeading: true
+}));
+
+
+//Interactivité HOVER
+var popup= new mapboxgl.Popup({
+   className: "metro",
+   closeButton: false,
+   closeOnClick: false });
+
+map.on('mousemove', function(e) {
+
+   var features= map.queryRenderedFeatures(e.point, { layers: ['Stations'] });
+   // Change the cursorstyle as a UI indicator.
+   map.getCanvas().style.cursor= (features.length) ? 'pointer' : '';
+
+   if (!features.length) {
+   popup.remove();
+   return; }
+
+   var feature= features[0];
+   popup.setLngLat(feature.geometry.coordinates)
+   .setHTML('<h2>'+feature.properties.nom+'</h2><hr> <img src="https://www.letelegramme.fr/images/2021/08/26/ligne-a-du-metro-a-rennes_5865154_676x338p.jpg?v=2" style="width:90%;opacity:0.9"><h3>'
+            +"ligne: "+feature.properties.ligne+'</h3>')
+      .addTo(map);
+});
+
+//Interactivité CLICK
+map.on('click', function(e) {
+   var features= map.queryRenderedFeatures(e.point, { layers: ['bus'] });
+
+   if (!features.length) {
+   return;
+   }
+
+   var feature= features[0];
+
+   const pmr =
+      feature.properties.estaccessiblepmr === true ||
+      feature.properties.estaccessiblepmr === "true"
+          ? "Oui" : "Non";
+
+
+   var popup= new mapboxgl.Popup({
+      className: "bus", 
+      offset: [0, -15] })
+
+   .setLngLat(feature.geometry.coordinates)
+   .setHTML('<h2>' + feature.properties.nom + '</h2><h3>'
+      +"Mobilier : " + feature.properties.mobilier + '</h3><p>'
+      +'<p>Accessibilité PMR : <strong>' + pmr + '</strong></p>' )
+.addTo(map);
+});
+
+map.on('mousemove', function(e) {
+   var features= map.queryRenderedFeatures(e.point, { layers: ['bus'] });
+   map.getCanvas().style.cursor= (features.length) ? 'pointer' : '';
+});
+
+// Configuration onglets geographiques
+// button gare
+document.getElementById('Gare').addEventListener('click', function ()
+{ map.flyTo({zoom: 16,
+center: [-1.672, 48.1043],
+pitch: 10,
+bearing: 50});
+});
+
+// boutton Rennes 1
+document.getElementById('Rennes1').addEventListener('click', function ()
+{ map.flyTo({zoom: 16,
+center: [-1.6396, 48.1186],
+pitch: 10,
+bearing: 50});
+});
+
+
+// boutton Rennes 2
+document.getElementById('Rennes2').addEventListener('click', function ()
+{ map.flyTo({zoom: 16,
+center: [-1.7023, 48.1194],
+pitch: 10,
+bearing: 50});
+});
+
+// boutton 2D/3D
+document.getElementById('3D').addEventListener('click', function () {
+
+  if (!is3D) {
+    map.flyTo({
+      pitch: 50,
+      bearing: -50
+    });
+
+    this.innerText = "Passer en 2D";
+    this.classList.add("active");
+
+  } else {
+    map.flyTo({
+      pitch: 0,
+      bearing: 0
+    });
+
+    this.innerText = "Passer en 3D";
+    this.classList.remove("active");
+  }
+
+  is3D = !is3D;
+});
+
+map.addControl(new mapboxgl.FullscreenControl());
+
+</script>
+</body>
+</html>
+

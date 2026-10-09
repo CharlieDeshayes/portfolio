@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Display origins map</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+    <link href="https://api.mapbox.com/mapbox-gl-js/v3.10.0/mapbox-gl.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap">
+    <script src="https://api.mapbox.com/mapbox-gl-js/v3.10.0/mapbox-gl.js"></script>
+    <script src="../functions/utils.js"></script>
+    <style>
+        body, html { 
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            width:100%;
+            height:100%;
+        }
+        #map {
+            height: 100%;
+            width: 100%;
+        }
+        .info-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 14px;
+            height: 14px;
+            margin-left: 5px;
+            border: 1px solid rgb(29, 107, 224);
+            border-radius: 50%;
+            font-size: 10px;
+            font-weight: bold;
+            color: white;
+            background-color: rgb(29, 107, 224);
+        }
+
+        .info-icon:hover {
+            background-color: rgba(255, 255, 255, 0.5);
+            color: rgb(29, 107, 224);
+        }
+
+        .mapboxgl-popup-content {
+            padding: 5px;
+            border-radius: 5px;
+            overflow: hidden;
+            box-shadow: 0 3px 15px rgba(0, 0, 0, 0.18);
+            background-color: rgba(255, 255, 255, 0.5); 
+            border-radius: 10px;
+            backdrop-filter: blur(5px);
+        }
+
+        .popup-content {
+            min-width: 190px;
+            font-family: "Quicksand";
+        }
+        .mapboxgl-popup-tip {
+            border-top-color: rgba(255, 255, 255, 0.5);
+        }
+        .mapboxgl-popup-anchor-bottom .mapboxgl-popup-tip {
+            border-top-color: rgba(255, 255, 255, 0.5);
+        }
+
+    </style>
+</head>
+<body>
+<div id="map"></div>
+<div id="layer-controls" 
+     style="
+        position: absolute;
+        top: 10px; 
+        left: 10px; 
+        background-color: rgba(255, 255, 255, 0.5); 
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(5px);
+        font-family: Quicksand;
+        border-radius: 10px;
+        padding: 12px;
+        z-index: 1;
+    ">
+    <label><input type="checkbox" id="toggle-region"> Région</label><br>
+    <label><input type="checkbox" id="toggle-dept" checked> Département</label><br>
+    <span id="toggle-com-container">
+        <input type="checkbox" id="toggle-com">
+        <label for="toggle-com">Communes</label>
+        <span id="toggle-com-info" class="info-icon">i</span>
+    </span>
+</div>
+<div id="legend"
+     style="
+        position: absolute;
+        bottom: 30px;
+        left: 10px;
+        width: auto;
+        background-color: rgba(255, 255, 255, 0.5);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        font-family: Quicksand;
+        padding: 12px;
+        z-index: 1;
+        border-radius: 10px;
+        backdrop-filter: blur(5px);
+     ">
+</div>
+<script>
+    
+	mapboxgl.accessToken = 'pk.eyJ1IjoiY2hhcmxpZS1kaHMiLCJhIjoiY21xdGQ5YngzMGN6dzJ0c2JxZ2l6MTEzdiJ9.x8VKSrXgHUMd-dvRiHyTaA';
+    const map = new mapboxgl.Map({
+        container: 'map',
+        zoom: 4,
+        maxZoom: 12,
+        minZoom: 4,
+        center: [-1, 46],
+        style: 'mapbox://styles/mapbox/light-v11',
+        projection: 'mercator'
+    });
+
+    map.addControl(new mapboxgl.NavigationControl());
+
+    Promise.all([
+        fetch('../data/admin/data_com.json')
+            .then(res => res.json())
+            .then(data => data.filter(
+                item => Number.isFinite(Number(item["tx_evol_pop_2016-2022"]))
+            )),
+        fetch('../data/admin/data_dept.json')
+            .then(res => res.json())
+            .then(data => data.filter(
+                item => Number.isFinite(Number(item["tx_evol_pop_2016-2022"]))
+            )),
+        fetch('../data/admin/data_reg.json')
+            .then(res => res.json())
+            .then(data => data.filter(
+                item => Number.isFinite(Number(item["tx_evol_pop_2016-2022"]))
+            )),
+    ])
+    .then(([data_com, data_dept, data_reg]) => {
+
+        const colorsCom = [
+            '#833AB4',
+            '#B52E76',
+            '#D94599',
+            '#FD6631',
+            '#FCE445'
+        ];
+
+        const colorsReg = [
+            '#833AB4',
+            // '#B52E76',
+            '#FD6631',
+            '#FCE445'
+        ];
+
+        const stepValuesCom = [];
+        const stepValuesDept = [];
+        const stepValuesReg = [];
+
+        colorsCom.forEach((color, i) => {
+            stepValuesCom.push(i, color);
+        });
+
+        colorsCom.forEach((color, i) => {
+            stepValuesDept.push(i, color);
+        }); 
+        
+        colorsReg.forEach((color, i) => {
+            stepValuesReg.push(i, color);
+        }); 
+        // ************** Communes **************
+        // const stepValuesCom = getBins(data_com, bins=4);
+        console.log("Bins Com: ", stepValuesCom)
+        // ************** Département **************
+        // const stepValuesDept = getBins(data_dept, bins=4);
+        console.log("Bins Dept: ", stepValuesDept)
+        // ************** Région **************
+        // const stepValuesReg = getBins(data_reg, bins=4);
+        console.log("Bins Reg: ", stepValuesReg)
+
+        const legends = {
+            region: {
+                title: "Région",
+                colors: colorsReg,
+                labels: [
+                    "Classe 1",
+                    "Classe 2",
+                    "Classe 3",
+                    "Classe 4"
+                ]
+            },
+
+            dept: {
+                title: "Département",
+                colors: colorsCom,
+                labels: [
+                    "Classe 1",
+                    "Classe 2",
+                    "Classe 3",
+                    "Classe 4",
+                    "Classe 5"
+                ]
+            },
+
+            com: {
+                title: "Commune",
+                colors: colorsCom,
+                labels: [
+                    "Classe 1",
+                    "Classe 2",
+                    "Classe 3",
+                    "Classe 4",
+                    "Classe 5"
+                ]
+            }
+        };
+
+        // Add tileset on map
+        map.on('load', () => {
+
+            // // IGN tiles
+            // map.addSource('ign_tiles', {
+            //     type: 'vector',
+            //     tiles: ['https://data.geopf.fr/tms/1.0.0/ADMIN_EXPRESS/{z}/{x}/{y}.pbf'],
+            //     promoteId: {
+            //         commune: 'fid',
+            //         departement: 'fid',
+            //         region: 'fid'
+            //     }
+            // });
+
+            // Mapbox tiles
+            map.addSource('com_tiles', {
+                type: 'vector',
+                url: 'mapbox://charlie-dhs.79hjig',
+            });
+
+            map.addSource('dept_tiles', {
+                type: 'vector',
+                url: 'mapbox://charlie-dhs.y07fcr',
+            });
+
+            map.addSource('reg_tiles', {
+                type: 'vector',
+                url: 'mapbox://charlie-dhs.vp72tb',
+            });
+
+            map.addLayer({
+                id: 'Region',
+                type: 'fill',
+                source: 'reg_tiles',
+                'source-layer': 'region',
+                layout: {
+                    visibility: 'none'
+                },
+                paint: {
+                    'fill-color': [
+                    'match',
+                    ['feature-state', 'classe'],
+                    ...stepValuesReg,
+                    'rgba(0, 0, 0, 0)'
+                    ],
+                    'fill-opacity':0.5
+                },
+            });
+
+            map.addLayer({
+                id: 'dept',
+                type: 'fill',
+                source: 'dept_tiles',
+                'source-layer': 'departement',
+                layout: {
+                    visibility: 'visible'
+                },
+                paint: {
+                    'fill-color': [
+                    'match',
+                    ['feature-state', 'classe'],
+                    ...stepValuesDept,
+                    'rgba(0, 0, 0, 0)'
+                    ],
+                    'fill-opacity':0.5
+                },
+            });
+
+            map.addLayer({
+                id: 'com',
+                type: 'fill',
+                source: 'com_tiles',
+                'source-layer': 'com25',
+                layout: {
+                    visibility: 'none'
+                },
+                paint: {
+                    'fill-color': [
+                    'match',
+                    ['feature-state', 'classe'],
+                    ...stepValuesCom,
+                    'rgba(0, 0, 0, 0)'
+                    ],
+                    'fill-opacity':0.5
+                },
+                minzoom: 7
+            });
+
+            updateCommuneCheckbox();
+            map.on('zoom', updateCommuneCheckbox);
+
+            function selectLayer(type) {
+
+                if (currentPopup) {
+                    currentPopup.remove();
+                    currentPopup = null;
+                }
+
+                const layers = {
+                    region: {
+                        checkbox: 'toggle-region',
+                        layer: 'Region',
+                        data: data_reg,
+                        colors: colorsReg,
+                        label: 'Région'
+                    },
+
+                    dept: {
+                        checkbox: 'toggle-dept',
+                        layer: 'dept',
+                        data: data_dept,
+                        colors: colorsCom,
+                        label: 'Département'
+                    },
+
+                    com: {
+                        checkbox: 'toggle-com',
+                        layer: 'com',
+                        data: data_com,
+                        colors: colorsCom,
+                        label: 'Commune'
+                    }
+                };
+
+                Object.entries(layers).forEach(([key, config]) => {
+
+                    const checkbox = document.getElementById(config.checkbox);
+                    const selected = key === type;
+                    checkbox.checked = selected;
+                    map.setLayoutProperty(
+                        config.layer,
+                        'visibility',
+                        selected ? 'visible' : 'none'
+                    );
+                });
+                // Affichage de la légende correspondante
+                const selectedLayer = layers[type];
+                if (selectedLayer) {
+                    updateLegend(
+                        selectedLayer.label,
+                        selectedLayer.data,
+                        selectedLayer.colors
+                    );
+                } else {
+                    hideLegend();
+                }
+            }
+
+            // Initialisation du département
+            selectLayer('dept');
+
+            document.getElementById('toggle-region').addEventListener('change', (e) => {
+                if (e.target.checked) {
+                    selectLayer('region');
+                } else {
+                    hideLegend();
+                }
+            });
+
+
+            document.getElementById('toggle-dept').addEventListener('change', (e) => {
+                if (e.target.checked) {
+                    selectLayer('dept');
+                } else {
+                    hideLegend();
+                }
+            });
+
+
+            document.getElementById('toggle-com').addEventListener('change', (e) => {
+                if (e.target.checked) {
+                    selectLayer('com');
+                } else {
+                    hideLegend();
+                }
+            });
+
+        });
+
+        const origin_com = {};
+        data_com.forEach((d) => {
+            origin_com[d.Code] = d;
+        });
+
+        const origin_dept = {};
+        data_dept.forEach((d) => {
+            origin_dept[d.Code] = d;
+        });
+
+        const origin_reg = {};
+        data_reg.forEach((d) => {
+            origin_reg[d.Code] = d;
+        });
+
+        // Join tilesets with GPS data
+        const layersToUpdate = [
+            { source: 'com_tiles', sourceLayer: 'com25', adminKey: 'CdCommune', originData: origin_com },
+            { source: 'dept_tiles', sourceLayer: 'departement', adminKey: 'code', originData: origin_dept },
+            { source: 'reg_tiles', sourceLayer: 'region', adminKey: 'code', originData: origin_reg},
+        ];
+
+        map.on('idle', () => {
+            layersToUpdate.forEach(config => updateFeatureStates(config));
+        });
+
+        // Set pop up
+        setupPopup('com', origin_com, 'com');
+        setupPopup('dept', origin_dept, 'dept');
+        setupPopup('Region', origin_reg, 'reg');
+
+        // Création des popup
+        // map.on('click', 'dept', (e) => {
+        //     const feature = e.features[0];
+        //     console.log(feature)
+
+        //     const code = String(feature.properties.code);
+        //     const data = origin_dept[code];
+
+        //     const taux = data?.['tx_evol_pop_2016-2022'];
+
+        //     new mapboxgl.Popup()
+        //         .setLngLat(e.lngLat)
+        //         .setHTML(`
+        //             <strong>${feature?.properties.nom}</strong><br>
+        //             Taux d'évolution : ${taux ?? 'N/A'} %
+        //         `)
+        //         .addTo(map);
+        // });
+
+    })
+    .catch(error => {
+        console.error('Erreur lors du chargement des fichiers JSON:', error);
+    });
+
+
+</script>
+</body>
+</html>

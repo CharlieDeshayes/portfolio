@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Tisséo - TripsLayer</title>
+
+    <link
+        href="https://unpkg.com/maplibre-gl@latest/dist/maplibre-gl.css"
+        rel="stylesheet"
+    >
+
+    <style>
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        #map {
+            width: 100%;
+            height: 100%;
+        }
+
+        #kpi {
+            position: absolute;
+            z-index: 10;
+            top: 20px;
+            right: 20px;
+            width: 320px;
+            padding: 15px;
+            background:  rgba(255, 255, 255, 0.5);
+            border-radius: 8px;
+            font-family: "Montserrat";
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(3px);
+            color:#555;
+            /* cachée par défaut */
+            display: none;
+        }
+
+        .kpi-value {
+            display: block;
+            font-size: 20px;
+            font-weight: 500;
+            color: #ff671b;
+        }
+
+        #info-line {
+            margin-bottom: 0.2rem;
+        }
+
+        #info-name {
+            display: block;
+            margin-bottom: 1.5rem;
+        }
+
+        .direction-name {
+            font-weight: 600;
+        }
+
+        .direction-count {
+            font-weight: 400;
+        }
+
+        #controls {
+            position: absolute;
+            z-index: 10;
+            top: 20px;
+            left: 20px;
+            width: 320px;
+            padding: 15px;
+            background:  rgba(255, 255, 255, 0.5);
+            border-radius: 8px;
+            font-family: "Montserrat";
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(3px);
+            color:#555
+        }
+
+        #controls h2 {
+            margin-top: 0;
+            margin-bottom: 10px;
+            font-size: 18px;
+            color: #ff671b
+        }
+
+        #time {
+            width: 100%;
+        }
+
+        #timeLabel {
+            margin-top: 8px;
+            font-weight: bold;
+        }
+
+        button {
+            margin-top: 10px;
+            margin-right: 5px;
+            padding: 7px 12px;
+            border-width: 2px;
+            border-color:#ff671b;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: "Montserrat";
+            font-size: 14px;
+            color: #555;
+            background-color: white;
+        }
+
+        select,
+        select::picker(select) {
+            appearance: base-select;
+        }
+
+        select::picker(select) {
+            appearance: base-select;
+            padding: 0.5rem;
+            border: 2px groove  #ff671b;
+            border-radius: 8px;
+            background-color: white;
+            color: #555;
+        }
+
+        #line-select::picker-icon {
+            color: #ff671b;
+            transition: transform 0.2s ease;
+        }
+
+        #line-select:open::picker-icon {
+            transform: rotate(180deg);
+        }
+
+        #line-select {
+            margin: 10px auto 0 auto;
+            padding: 7px 12px;
+            border-radius: 8px;
+            border-color: #ff671b;
+            border-width: 2px;
+            font-size: 14px;
+            background-color: rgba(255, 255, 255, 0.5);
+        }
+
+        /* Option sélectionnée */
+        #line-select option:checked {
+            background-color: #ff671b;
+            color: white;
+        }
+
+        #info {
+            margin-top: 10px;
+            font-size: 13px;
+            color: #555;
+        }
+    </style>
+</head>
+
+<body>
+
+<div id="map"></div>
+
+<div id="controls">
+
+    <h2>Linéo - Horaires théoriques du samedi 3 octobre 2026</h2>
+
+    <input
+        id="time"
+        type="range"
+        min="18900"
+        max="86400"
+        step="1"
+        value="0"
+    >
+
+    <div id="timeLabel">05:15:00</div>
+    <button id="play"> ▶ Lecture </button>
+    <button id="reset"> ↺ Réinitialiser </button>
+    <select id="line-select">
+        <option value="all">Toutes les lignes</option>
+    </select>
+    <div id="info">Chargement des trajets... </div>
+
+</div>
+
+<div id="kpi">
+    <h2 id="info-line"></h2>
+    <span class="kpi-value" id="info-name"></span>
+
+    <div id="info-dir0"></div>
+    <div id="info-dir1"></div>
+
+    <div class="chart-container">
+        <h3>Répartition des départs</h3>
+        <canvas id="departures-chart"></canvas>
+    </div>
+</div>
+
+<script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
+<script src="https://unpkg.com/deck.gl@9.1.0/dist.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="app.js"></script>
+
+</body>
+</html>

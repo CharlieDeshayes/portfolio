@@ -1,0 +1,93 @@
+[
+  {
+    "Code":"11",
+    "Libellé":"Île-de-France",
+    "tx_evol_pop_2016-2022":2.18,
+    "classe":1,
+    "classe_label":"0.1 à 3.8"
+  },
+  {
+    "Code":"24",
+    "Libellé":"Centre-Val de Loire",
+    "tx_evol_pop_2016-2022":0.14,
+    "classe":0,
+    "classe_label":"-0.5 à 0.1"
+  },
+  {
+    "Code":"27",
+    "Libellé":"Bourgogne-Franche-Comté",
+    "tx_evol_pop_2016-2022":-0.51,
+    "classe":0,
+    "classe_label":"-0.5 à 0.1"
+  },
+  {
+    "Code":"28",
+    "Libellé":"Normandie",
+    "tx_evol_pop_2016-2022":0.09,
+    "classe":0,
+    "classe_label":"-0.5 à 0.1"
+  },
+  {
+    "Code":"32",
+    "Libellé":"Hauts-de-France",
+    "tx_evol_pop_2016-2022":-0.13,
+    "classe":0,
+    "classe_label":"-0.5 à 0.1"
+  },
+  {
+    "Code":"44",
+    "Libellé":"Grand-Est",
+    "tx_evol_pop_2016-2022":0.09,
+    "classe":0,
+    "classe_label":"-0.5 à 0.1"
+  },
+  {
+    "Code":"52",
+    "Libellé":"Pays de la Loire",
+    "tx_evol_pop_2016-2022":3.79,
+    "classe":1,
+    "classe_label":"0.1 à 3.8"
+  },
+  {
+    "Code":"53",
+    "Libellé":"Bretagne",
+    "tx_evol_pop_2016-2022":3.52,
+    "classe":1,
+    "classe_label":"0.1 à 3.8"
+  },
+  {
+    "Code":"75",
+    "Libellé":"Nouvelle Aquitaine",
+    "tx_evol_pop_2016-2022":3.0,
+    "classe":1,
+    "classe_label":"0.1 à 3.8"
+  },
+  {
+    "Code":"76",
+    "Libellé":"Occitanie",
+    "tx_evol_pop_2016-2022":4.69,
+    "classe":2,
+    "classe_label":"3.8 à 6.3"
+  },
+  {
+    "Code":"84",
+    "Libellé":"Auvergne-Rhône-Alpes",
+    "tx_evol_pop_2016-2022":3.12,
+    "classe":1,
+    "classe_label":"0.1 à 3.8"
+  },
+  {
+    "Code":"93",
+    "Libellé":"Provence-Alpes-Côte d'Azur",
+    "tx_evol_pop_2016-2022":2.95,
+    "classe":1,
+    "classe_label":"0.1 à 3.8"
+  },
+  {
+    "Code":"94",
+    "Libellé":"Corse",
+    "tx_evol_pop_2016-2022":6.3,
+    "classe":2,
+    "classe_label":"3.8 à 6.3"
+  }
+]

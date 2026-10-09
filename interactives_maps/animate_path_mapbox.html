@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Animate the camera along a path</title>
+<meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+
+<link href="https://api.mapbox.com/mapbox-gl-js/v3.32.0/mapbox-gl.css" rel="stylesheet">
+<script src="https://api.mapbox.com/mapbox-gl-js/v3.32.0/mapbox-gl.js"></script>
+
+<style>
+body {
+    margin: 0;
+    padding: 0;
+}
+
+#map {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+}
+#map-title {
+    position: absolute;
+    top: 25px;
+    left: 25px;
+
+    z-index: 20;
+
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    padding: 12px 16px;
+
+    background: rgba(255, 255, 255, 0.75);
+    backdrop-filter: blur(6px);
+
+    border-radius: 10px;
+
+    font-family: "Montserrat", sans-serif;
+    color: #123B5D;
+
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+}
+
+#map-title img {
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
+}
+
+#map-title h1 {
+    margin: 0;
+    font-size: 22px;
+    font-weight: 700;
+    line-height: 1.1;
+}
+
+#map-title p {
+    margin: 4px 0 0;
+    font-size: 12px;
+    font-weight: 500;
+    opacity: 0.7;
+}
+#chart-container {
+    position: absolute;
+    z-index: 10;
+    bottom: 20px;
+    left: 20px;
+    right: 20px;
+    width: 'auto';
+    height: 150px;
+    padding: 5px;
+    background:  rgba(255, 255, 255, 0.5);
+    border-radius: 8px;
+    font-family: "Montserrat";
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(3px);
+    color:#555
+}
+
+#profile-chart {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+</style>
+</head>
+
+<body>
+
+<div id="map"></div>
+<div id="map-title">
+    <img src="../../data/diag_fous/flag_reunion.png" alt="Drapeau de La Réunion">
+    <div>
+        <h1>Diagonale des Fous</h1>
+        <p>Grand Raid de La Réunion 2026</p>
+    </div>
+</div>
+<div id="chart-container">
+    <canvas id="profile-chart"></canvas>
+</div>
+
+<script src="https://unpkg.com/@turf/turf@6/turf.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+
+
+/* =========================================================
+   CHARGEMENT DES GEOJSON LOCAUX
+========================================================= */
+
+Promise.all([
+    fetch('../../data/diag_fous/tracks_diag_des_fous.geojson').then(response => response.json()),
+    fetch('../../data/diag_fous/waypoints_diag_des_fous.geojson').then(response => response.json()),
+    fetch('../../data/diag_fous/profile.json').then(response => response.json())
+])
+
+.then(([targetGeoJSON, cameraGeoJSON, profile]) => {
+
+    const targetRoute =
+        targetGeoJSON.features[0].geometry.coordinates[0];
+
+    const cameraRoute = cameraGeoJSON.features.map(
+        feature => [
+            feature.geometry.coordinates[0],
+            feature.geometry.coordinates[1]
+        ]
+    );
+
+    const startPoint = cameraRoute[0];
+
+
+    /* =====================================================
+       CREATION DATAVIZ PROFIL ALTIMETRIQUE
+    ===================================================== */
+
+    const ctx = document.getElementById('profile-chart');
+    const profileChart = new Chart(ctx, {
+        type: 'line',
+
+        data: {
+            datasets: [
+                {
+                    label: 'Profil altimétrique',
+                    data: profile.map(d => ({
+                        x: d.distance,
+                        y: d.elevation
+                    })),
+                    borderColor: '#123B5D',
+                    // 'rgba(255, 103, 27, 0.15)'
+                    backgroundColor: 'rgba(18, 59, 93, 0.15)',
+                    borderWidth: 2,
+                    pointRadius: 0,
+                    fill: true,
+                    tension: 0.1
+                },
+                {
+                    label: 'Profil altimétrique',
+                    data: [],
+                    borderColor: '#FF671B',
+                    backgroundColor: '#FF671B',
+
+                    // Point
+                    pointBackgroundColor: '#FF671B',
+                    pointBorderColor: '#FFFFFF',
+                    pointBorderWidth:2,
+                    pointRadius: 6,
+                    pointHoverRadius: 7,
+                    showLine: true
+                }
+            ]
+        },
+
+        options: {
+            responsive: true,
+            animation: false,
+            maintainAspectRatio: false,
+
+            plugins: {
+                legend: {
+                    display: false
+                }
+            },
+
+            scales: {
+                x: {
+                    type: 'linear',
+                    title: {
+                        display: true,
+                        text: 'Distance (km)'
+                    }
+                },
+
+                y: {
+                    title: {
+                        display: true,
+                        text: 'Altitude (m)'
+                    }
+                }
+            }
+        }
+    });
+
+
+    /* =====================================================
+       ANIMATION DE LA CAMERA
+    ===================================================== */
+
+    const map = new mapboxgl.Map({
+        accessToken: 'pk.eyJ1IjoiY2hhcmxpZS1kaHMiLCJhIjoiY21xdGQ5YngzMGN6dzJ0c2JxZ2l6MTEzdiJ9.x8VKSrXgHUMd-dvRiHyTaA',
+        container: 'map',
+        zoom: 12,
+        center: [startPoint[0], startPoint[1]],
+        pitch: 65,
+        // bearing: -90,
+        style: 'mapbox://styles/mapbox/standard',
+        interactive: true
+    });
+
+    map.on('load', () => {
+
+
+        map.addSource('mapbox-dem', {
+            type: 'raster-dem',
+            url: 'mapbox://mapbox.mapbox-terrain-dem-v1',
+            tileSize: 512,
+            maxzoom: 14
+        });
+
+        map.setTerrain({
+            source: 'mapbox-dem',
+            exaggeration: 1.5
+        });
+
+        console.log('targetGeoJSON:', targetGeoJSON);
+
+        map.addSource('trace', {
+            type: 'geojson',
+            data: targetGeoJSON
+        });
+
+        console.log(map.getSource('trace'));
+
+
+        map.addLayer({
+            type: 'line',
+            source: 'trace',
+            id: 'line',
+
+            paint: {
+                'line-color': '#123B5D',
+                'line-width': 5
+            },
+
+            layout: {
+                'line-cap': 'round',
+                'line-join': 'round'
+            }
+        });
+
+        map.addSource('camera-target', {
+            type: 'geojson',
+            data: {
+                type: 'Feature',
+                geometry: {
+                    type: 'Point',
+                    coordinates: targetRoute[0]
+                },
+                properties: {}
+            }
+        });
+
+        map.addLayer({
+            id: 'camera-target-point',
+            type: 'circle',
+            source: 'camera-target',
+            paint: {
+                'circle-radius': 6,
+                'circle-color': '#FF671B',
+                'circle-stroke-color': '#FFFFFF',
+                'circle-stroke-width': 2
+            }
+        });
+
+        const animationDuration = 250000;
+        const cameraAltitude = 5000;
+
+
+        const routeDistance = turf.lineDistance(
+            turf.lineString(targetRoute)
+        );
+
+        const cameraRouteDistance = turf.lineDistance(
+            turf.lineString(cameraRoute)
+        );
+
+
+        let start;
+
+
+        function frame(time) {
+
+            if (!start) {
+                start = time;
+            }
+
+
+            const phase =
+                (time - start) / animationDuration;
+
+            
+            if (phase > 1) {
+
+                setTimeout(() => {
+                    start = 0.0;
+                }, 1500);
+
+            }
+
+
+            /* ---------------------------------------------
+               Position sur la route
+            --------------------------------------------- */
+
+            const alongRoute = turf.along(
+                turf.lineString(targetRoute),
+                routeDistance * phase
+            ).geometry.coordinates;
+
+            // processing dataviz point
+            const currentDistance = routeDistance * phase;
+            let closestIndex = 0;
+            let minDistance = Infinity;
+
+            for (let i = 0; i < profile.length; i++) {
+
+                const distance = Math.abs(
+                    profile[i].distance - currentDistance
+                );
+
+                if (distance < minDistance) {
+                    minDistance = distance;
+                    closestIndex = i;
+                }
+            }
+
+            const currentElevation =
+                profile[closestIndex].elevation;
+
+            const currentProfileDistance =
+                profile[closestIndex].distance;
+
+            profileChart.data.datasets[1].data = [{
+                x: currentProfileDistance,
+                y: currentElevation
+            }];
+
+            profileChart.update('none');
+
+            // Mise à jour du point suivi
+            map.getSource('camera-target').setData({
+                type: 'Feature',
+                geometry: {
+                    type: 'Point',
+                    coordinates: alongRoute
+                },
+                properties: {}
+            });
+
+
+            /* ---------------------------------------------
+               Position de la caméra
+            --------------------------------------------- */
+            const cameraOffset = -5; // mètres
+            const alongCamera = turf.along(
+                turf.lineString(cameraRoute),
+                Math.max(
+                    0,
+                    Math.min(
+                        cameraRouteDistance,
+                        cameraRouteDistance * phase + cameraOffset
+                    )
+                )
+            ).geometry.coordinates;
+
+
+            /* ---------------------------------------------
+               Camera
+            --------------------------------------------- */
+
+            const camera = map.getFreeCameraOptions();
+
+
+            camera.position =
+                mapboxgl.MercatorCoordinate.fromLngLat(
+                    {
+                        lng: alongCamera[0],
+                        lat: alongCamera[1]
+                    },
+                    cameraAltitude
+                );
+
+
+            camera.lookAtPoint({
+                lng: alongRoute[0],
+                lat: alongRoute[1]
+            });
+
+
+            map.setFreeCameraOptions(camera);
+
+
+            window.requestAnimationFrame(frame);
+
+        }
+
+
+        window.requestAnimationFrame(frame);
+
+    });
+
+})
+
+.catch(error => {
+    console.error(
+        'Erreur lors du chargement des GeoJSON :',
+        error
+    );
+});
+
+</script>
+
+</body>
+</html>

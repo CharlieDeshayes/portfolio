@@ -1,0 +1,702 @@
+[
+  {
+    "Code":"01",
+    "Libellé":"Ain",
+    "tx_evol_pop_2016-2022":5.15,
+    "classe":4,
+    "classe_label":"4.0 à 8.0"
+  },
+  {
+    "Code":"02",
+    "Libellé":"Aisne",
+    "tx_evol_pop_2016-2022":-1.97,
+    "classe":1,
+    "classe_label":"-2.5 à -0.1"
+  },
+  {
+    "Code":"03",
+    "Libellé":"Allier",
+    "tx_evol_pop_2016-2022":-1.38,
+    "classe":1,
+    "classe_label":"-2.5 à -0.1"
+  },
+  {
+    "Code":"04",
+    "Libellé":"Alpes-de-Haute-Provence",
+    "tx_evol_pop_2016-2022":2.84,
+    "classe":3,
+    "classe_label":"1.9 à 4.0"
+  },
+  {
+    "Code":"05",
+    "Libellé":"Hautes-Alpes",
+    "tx_evol_pop_2016-2022":0.4,
+    "classe":2,
+    "classe_label":"-0.1 à 1.9"
+  },
+  {
+    "Code":"06",
+    "Libellé":"Alpes-Maritimes",
+    "tx_evol_pop_2016-2022":2.85,
+    "classe":3,
+    "classe_label":"1.9 à 4.0"
+  },
+  {
+    "Code":"07",
+    "Libellé":"Ardèche",
+    "tx_evol_pop_2016-2022":2.48,
+    "classe":3,
+    "classe_label":"1.9 à 4.0"
+  },
+  {
+    "Code":"08",
+    "Libellé":"Ardennes",
+    "tx_evol_pop_2016-2022":-2.97,
+    "classe":0,
+    "classe_label":"-4.6 à -2.5"
+  },
+  {
+    "Code":"09",
+    "Libellé":"Ariège",
+    "tx_evol_pop_2016-2022":1.48,
+    "classe":2,
+    "classe_label":"-0.1 à 1.9"
+  },
+  {
+    "Code":"10",
+    "Libellé":"Aube",
+    "tx_evol_pop_2016-2022":0.7,
+    "classe":2,
+    "classe_label":"-0.1 à 1.9"
+  },
+  {
+    "Code":"11",
+    "Libellé":"Aude",
+    "tx_evol_pop_2016-2022":2.65,
+    "classe":3,
+    "classe_label":"1.9 à 4.0"
+  },
+  {
+    "Code":"12",
+    "Libellé":"Aveyron",
+    "tx_evol_pop_2016-2022":0.37,
+    "classe":2,
+    "classe_label":"-0.1 à 1.9"
+  },
+  {
+    "Code":"13",
+    "Libellé":"Bouches-du-Rhône",
+    "tx_evol_pop_2016-2022":2.48,
+    "classe":3,
+    "classe_label":"1.9 à 4.0"
+  },
+  {
+    "Code":"14",
+    "Libellé":"Calvados",
+    "tx_evol_pop_2016-2022":1.58,
+    "classe":2,
+    "classe_label":"-0.1 à 1.9"
+  },
+  {
+    "Code":"15",
+    "Libellé":"Cantal",
+    "tx_evol_pop_2016-2022":-1.08,
+    "classe":1,
+    "classe_label":"-2.5 à -0.1"
+  },
+  {
+    "Code":"16",
+    "Libellé":"Charente",
+    "tx_evol_pop_2016-2022":-0.48,
+    "classe":1,
+    "classe_label":"-2.5 à -0.1"
+  },
+  {
+    "Code":"17",
+    "Libellé":"Charente-Maritime",
+    "tx_evol_pop_2016-2022":4.04,
+    "classe":3,
+    "classe_label":"1.9 à 4.0"
+  },
+  {
+    "Code":"18",
+    "Libellé":"Cher",
+    "tx_evol_pop_2016-2022":-2.48,
+    "classe":0,
+    "classe_label":"-4.6 à -2.5"
+  },
+  {
+    "Code":"19",
+    "Libellé":"Corrèze",
+    "tx_evol_pop_2016-2022":-0.59,
+    "classe":1,
+    "classe_label":"-2.5 à -0.1"
+  },
+  {
+    "Code":"21",
+    "Libellé":"Côte-d'Or",
+    "tx_evol_pop_2016-2022":0.82,
+    "classe":2,
+    "classe_label":"-0.1 à 1.9"
+  },
+  {
+    "Code":"22",
+    "Libellé":"Côtes-d'Armor",
+    "tx_evol_pop_2016-2022":1.78,
+    "classe":2,
+    "classe_label":"-0.1 à 1.9"
+  },
+  {
+    "Code":"23",
+    "Libellé":"Creuse",
+    "tx_evol_pop_2016-2022":-3.32,
+    "classe":0,
+    "classe_label":"-4.6 à -2.5"
+  },
+  {
+    "Code":"24",
+    "Libellé":"Dordogne",
+    "tx_evol_pop_2016-2022":0.37,
+    "classe":2,
+    "classe_label":"-0.1 à 1.9"
+  },
+  {
+    "Code":"25",
+    "Libellé":"Doubs",
+    "tx_evol_pop_2016-2022":1.88,
+    "classe":2,
+    "classe_label":"-0.1 à 1.9"
+  },
+  {
+    "Code":"26",
+    "Libellé":"Drôme",
+    "tx_evol_pop_2016-2022":2.64,
+    "classe":3,
+    "classe_label":"1.9 à 4.0"
+  },
+  {
+    "Code":"27",
+    "Libellé":"Eure",
+    "tx_evol_pop_2016-2022":-0.25,
+    "classe":1,
+    "classe_label":"-2.5 à -0.1"
+  },
+  {
+    "Code":"28",
+    "Libellé":"Eure-et-Loir",
+    "tx_evol_pop_2016-2022":-0.23,
+    "classe":1,
+    "classe_label":"-2.5 à -0.1"
+  },
+  {
+    "Code":"29",
+    "Libellé":"Finistère",
+    "tx_evol_pop_2016-2022":2.16,
+    "classe":3,
+    "classe_label":"1.9 à 4.0"
+  },
+  {
+    "Code":"2A",
+    "Libellé":"Corse-du-Sud",
+    "tx_evol_pop_2016-2022":7.61,
+    "classe":4,
+    "classe_label":"4.0 à 8.0"
+  },
+  {
+    "Code":"2B",
+    "Libellé":"Haute-Corse",
+    "tx_evol_pop_2016-2022":5.15,
+    "classe":4,
+    "classe_label":"4.0 à 8.0"
+  },
+  {
+    "Code":"30",
+    "Libellé":"Gard",
+    "tx_evol_pop_2016-2022":2.97,
+    "classe":3,
+    "classe_label":"1.9 à 4.0"
+  },
+  {
+    "Code":"31",
+    "Libellé":"Haute-Garonne",
+    "tx_evol_pop_2016-2022":8.02,
+    "classe":4,
+    "classe_label":"4.0 à 8.0"
+  },
+  {
+    "Code":"32",
+    "Libellé":"Gers",
+    "tx_evol_pop_2016-2022":1.04,
+    "classe":2,
+    "classe_label":"-0.1 à 1.9"
+  },
+  {
+    "Code":"33",
+    "Libellé":"Gironde",
+    "tx_evol_pop_2016-2022":6.91,
+    "classe":4,
+    "classe_label":"4.0 à 8.0"
+  },
+  {
+    "Code":"34",
+    "Libellé":"Hérault",
+    "tx_evol_pop_2016-2022":7.49,
+    "classe":4,
+    "classe_label":"4.0 à 8.0"
+  },
+  {
+    "Code":"35",
+    "Libellé":"Ille-et-Vilaine",
+    "tx_evol_pop_2016-2022":5.46,
+    "classe":4,
+    "classe_label":"4.0 à 8.0"
+  },
+  {
+    "Code":"36",
+    "Libellé":"Indre",
+    "tx_evol_pop_2016-2022":-3.0,
+    "classe":0,
+    "classe_label":"-4.6 à -2.5"
+  },
+  {
+    "Code":"37",
+    "Libellé":"Indre-et-Loire",
+    "tx_evol_pop_2016-2022":1.67,
+    "classe":2,
+    "classe_label":"-0.1 à 1.9"
+  },
+  {
+    "Code":"38",
+    "Libellé":"Isère",
+    "tx_evol_pop_2016-2022":3.07,
+    "classe":3,
+    "classe_label":"1.9 à 4.0"
+  },
+  {
+    "Code":"39",
+    "Libellé":"Jura",
+    "tx_evol_pop_2016-2022":-0.81,
+    "classe":1,
+    "classe_label":"-2.5 à -0.1"
+  },
+  {
+    "Code":"40",
+    "Libellé":"Landes",
+    "tx_evol_pop_2016-2022":5.78,
+    "classe":4,
+    "classe_label":"4.0 à 8.0"
+  },
+  {
+    "Code":"41",
+    "Libellé":"Loir-et-Cher",
+    "tx_evol_pop_2016-2022":-1.15,
+    "classe":1,
+    "classe_label":"-2.5 à -0.1"
+  },
+  {
+    "Code":"42",
+    "Libellé":"Loire",
+    "tx_evol_pop_2016-2022":1.32,
+    "classe":2,
+    "classe_label":"-0.1 à 1.9"
+  },
+  {
+    "Code":"43",
+    "Libellé":"Haute-Loire",
+    "tx_evol_pop_2016-2022":0.36,
+    "classe":2,
+    "classe_label":"-0.1 à 1.9"
+  },
+  {
+    "Code":"44",
+    "Libellé":"Loire-Atlantique",
+    "tx_evol_pop_2016-2022":6.68,
+    "classe":4,
+    "classe_label":"4.0 à 8.0"
+  },
+  {
+    "Code":"45",
+    "Libellé":"Loiret",
+    "tx_evol_pop_2016-2022":1.89,
+    "classe":2,
+    "classe_label":"-0.1 à 1.9"
+  },
+  {
+    "Code":"46",
+    "Libellé":"Lot",
+    "tx_evol_pop_2016-2022":1.31,
+    "classe":2,
+    "classe_label":"-0.1 à 1.9"
+  },
+  {
+    "Code":"47",
+    "Libellé":"Lot-et-Garonne",
+    "tx_evol_pop_2016-2022":-0.18,
+    "classe":1,
+    "classe_label":"-2.5 à -0.1"
+  },
+  {
+    "Code":"48",
+    "Libellé":"Lozère",
+    "tx_evol_pop_2016-2022":0.11,
+    "classe":2,
+    "classe_label":"-0.1 à 1.9"
+  },
+  {
+    "Code":"49",
+    "Libellé":"Maine-et-Loire",
+    "tx_evol_pop_2016-2022":2.12,
+    "classe":3,
+    "classe_label":"1.9 à 4.0"
+  },
+  {
+    "Code":"50",
+    "Libellé":"Manche",
+    "tx_evol_pop_2016-2022":-0.31,
+    "classe":1,
+    "classe_label":"-2.5 à -0.1"
+  },
+  {
+    "Code":"51",
+    "Libellé":"Marne",
+    "tx_evol_pop_2016-2022":-1.19,
+    "classe":1,
+    "classe_label":"-2.5 à -0.1"
+  },
+  {
+    "Code":"52",
+    "Libellé":"Haute-Marne",
+    "tx_evol_pop_2016-2022":-4.62,
+    "classe":0,
+    "classe_label":"-4.6 à -2.5"
+  },
+  {
+    "Code":"53",
+    "Libellé":"Mayenne",
+    "tx_evol_pop_2016-2022":-0.73,
+    "classe":1,
+    "classe_label":"-2.5 à -0.1"
+  },
+  {
+    "Code":"54",
+    "Libellé":"Meurthe-et-Moselle",
+    "tx_evol_pop_2016-2022":-0.13,
+    "classe":1,
+    "classe_label":"-2.5 à -0.1"
+  },
+  {
+    "Code":"55",
+    "Libellé":"Meuse",
+    "tx_evol_pop_2016-2022":-4.4,
+    "classe":0,
+    "classe_label":"-4.6 à -2.5"
+  },
+  {
+    "Code":"56",
+    "Libellé":"Morbihan",
+    "tx_evol_pop_2016-2022":3.82,
+    "classe":3,
+    "classe_label":"1.9 à 4.0"
+  },
+  {
+    "Code":"57",
+    "Libellé":"Moselle",
+    "tx_evol_pop_2016-2022":0.52,
+    "classe":2,
+    "classe_label":"-0.1 à 1.9"
+  },
+  {
+    "Code":"58",
+    "Libellé":"Nièvre",
+    "tx_evol_pop_2016-2022":-3.28,
+    "classe":0,
+    "classe_label":"-4.6 à -2.5"
+  },
+  {
+    "Code":"59",
+    "Libellé":"Nord",
+    "tx_evol_pop_2016-2022":0.51,
+    "classe":2,
+    "classe_label":"-0.1 à 1.9"
+  },
+  {
+    "Code":"60",
+    "Libellé":"Oise",
+    "tx_evol_pop_2016-2022":0.87,
+    "classe":2,
+    "classe_label":"-0.1 à 1.9"
+  },
+  {
+    "Code":"61",
+    "Libellé":"Orne",
+    "tx_evol_pop_2016-2022":-3.21,
+    "classe":0,
+    "classe_label":"-4.6 à -2.5"
+  },
+  {
+    "Code":"62",
+    "Libellé":"Pas-de-Calais",
+    "tx_evol_pop_2016-2022":-0.72,
+    "classe":1,
+    "classe_label":"-2.5 à -0.1"
+  },
+  {
+    "Code":"63",
+    "Libellé":"Puy-de-Dôme",
+    "tx_evol_pop_2016-2022":2.1,
+    "classe":3,
+    "classe_label":"1.9 à 4.0"
+  },
+  {
+    "Code":"64",
+    "Libellé":"Pyrénées-Atlantiques",
+    "tx_evol_pop_2016-2022":3.78,
+    "classe":3,
+    "classe_label":"1.9 à 4.0"
+  },
+  {
+    "Code":"65",
+    "Libellé":"Hautes-Pyrénées",
+    "tx_evol_pop_2016-2022":1.59,
+    "classe":2,
+    "classe_label":"-0.1 à 1.9"
+  },
+  {
+    "Code":"66",
+    "Libellé":"Pyrénées-Orientales",
+    "tx_evol_pop_2016-2022":3.92,
+    "classe":3,
+    "classe_label":"1.9 à 4.0"
+  },
+  {
+    "Code":"67",
+    "Libellé":"Bas-Rhin",
+    "tx_evol_pop_2016-2022":3.17,
+    "classe":3,
+    "classe_label":"1.9 à 4.0"
+  },
+  {
+    "Code":"68",
+    "Libellé":"Haut-Rhin",
+    "tx_evol_pop_2016-2022":0.66,
+    "classe":2,
+    "classe_label":"-0.1 à 1.9"
+  },
+  {
+    "Code":"69",
+    "Libellé":"Rhône",
+    "tx_evol_pop_2016-2022":3.93,
+    "classe":3,
+    "classe_label":"1.9 à 4.0"
+  },
+  {
+    "Code":"70",
+    "Libellé":"Haute-Saône",
+    "tx_evol_pop_2016-2022":-1.4,
+    "classe":1,
+    "classe_label":"-2.5 à -0.1"
+  },
+  {
+    "Code":"71",
+    "Libellé":"Saône-et-Loire",
+    "tx_evol_pop_2016-2022":-1.06,
+    "classe":1,
+    "classe_label":"-2.5 à -0.1"
+  },
+  {
+    "Code":"72",
+    "Libellé":"Sarthe",
+    "tx_evol_pop_2016-2022":-0.25,
+    "classe":1,
+    "classe_label":"-2.5 à -0.1"
+  },
+  {
+    "Code":"73",
+    "Libellé":"Savoie",
+    "tx_evol_pop_2016-2022":3.63,
+    "classe":3,
+    "classe_label":"1.9 à 4.0"
+  },
+  {
+    "Code":"74",
+    "Libellé":"Haute-Savoie",
+    "tx_evol_pop_2016-2022":6.01,
+    "classe":4,
+    "classe_label":"4.0 à 8.0"
+  },
+  {
+    "Code":"75",
+    "Libellé":"Paris",
+    "tx_evol_pop_2016-2022":-3.5,
+    "classe":0,
+    "classe_label":"-4.6 à -2.5"
+  },
+  {
+    "Code":"76",
+    "Libellé":"Seine-Maritime",
+    "tx_evol_pop_2016-2022":0.35,
+    "classe":2,
+    "classe_label":"-0.1 à 1.9"
+  },
+  {
+    "Code":"77",
+    "Libellé":"Seine-et-Marne",
+    "tx_evol_pop_2016-2022":3.92,
+    "classe":3,
+    "classe_label":"1.9 à 4.0"
+  },
+  {
+    "Code":"78",
+    "Libellé":"Yvelines",
+    "tx_evol_pop_2016-2022":2.72,
+    "classe":3,
+    "classe_label":"1.9 à 4.0"
+  },
+  {
+    "Code":"79",
+    "Libellé":"Deux-Sèvres",
+    "tx_evol_pop_2016-2022":0.18,
+    "classe":2,
+    "classe_label":"-0.1 à 1.9"
+  },
+  {
+    "Code":"80",
+    "Libellé":"Somme",
+    "tx_evol_pop_2016-2022":-1.26,
+    "classe":1,
+    "classe_label":"-2.5 à -0.1"
+  },
+  {
+    "Code":"81",
+    "Libellé":"Tarn",
+    "tx_evol_pop_2016-2022":2.52,
+    "classe":3,
+    "classe_label":"1.9 à 4.0"
+  },
+  {
+    "Code":"82",
+    "Libellé":"Tarn-et-Garonne",
+    "tx_evol_pop_2016-2022":3.12,
+    "classe":3,
+    "classe_label":"1.9 à 4.0"
+  },
+  {
+    "Code":"83",
+    "Libellé":"Var",
+    "tx_evol_pop_2016-2022":4.98,
+    "classe":4,
+    "classe_label":"4.0 à 8.0"
+  },
+  {
+    "Code":"84",
+    "Libellé":"Vaucluse",
+    "tx_evol_pop_2016-2022":1.73,
+    "classe":2,
+    "classe_label":"-0.1 à 1.9"
+  },
+  {
+    "Code":"85",
+    "Libellé":"Vendée",
+    "tx_evol_pop_2016-2022":5.33,
+    "classe":4,
+    "classe_label":"4.0 à 8.0"
+  },
+  {
+    "Code":"86",
+    "Libellé":"Vienne",
+    "tx_evol_pop_2016-2022":0.6,
+    "classe":2,
+    "classe_label":"-0.1 à 1.9"
+  },
+  {
+    "Code":"87",
+    "Libellé":"Haute-Vienne",
+    "tx_evol_pop_2016-2022":-0.68,
+    "classe":1,
+    "classe_label":"-2.5 à -0.1"
+  },
+  {
+    "Code":"88",
+    "Libellé":"Vosges",
+    "tx_evol_pop_2016-2022":-2.96,
+    "classe":0,
+    "classe_label":"-4.6 à -2.5"
+  },
+  {
+    "Code":"89",
+    "Libellé":"Yonne",
+    "tx_evol_pop_2016-2022":-1.95,
+    "classe":1,
+    "classe_label":"-2.5 à -0.1"
+  },
+  {
+    "Code":"90",
+    "Libellé":"Territoire de Belfort",
+    "tx_evol_pop_2016-2022":-2.78,
+    "classe":0,
+    "classe_label":"-4.6 à -2.5"
+  },
+  {
+    "Code":"91",
+    "Libellé":"Essonne",
+    "tx_evol_pop_2016-2022":2.89,
+    "classe":3,
+    "classe_label":"1.9 à 4.0"
+  },
+  {
+    "Code":"92",
+    "Libellé":"Hauts-de-Seine",
+    "tx_evol_pop_2016-2022":2.75,
+    "classe":3,
+    "classe_label":"1.9 à 4.0"
+  },
+  {
+    "Code":"93",
+    "Libellé":"Seine-Saint-Denis",
+    "tx_evol_pop_2016-2022":4.67,
+    "classe":4,
+    "classe_label":"4.0 à 8.0"
+  },
+  {
+    "Code":"94",
+    "Libellé":"Val-de-Marne",
+    "tx_evol_pop_2016-2022":3.0,
+    "classe":3,
+    "classe_label":"1.9 à 4.0"
+  },
+  {
+    "Code":"95",
+    "Libellé":"Val-d'Oise",
+    "tx_evol_pop_2016-2022":4.0,
+    "classe":3,
+    "classe_label":"1.9 à 4.0"
+  },
+  {
+    "Code":"971",
+    "Libellé":"Guadeloupe",
+    "tx_evol_pop_2016-2022":-2.67,
+    "classe":0,
+    "classe_label":"-4.6 à -2.5"
+  },
+  {
+    "Code":"972",
+    "Libellé":"Martinique",
+    "tx_evol_pop_2016-2022":-4.11,
+    "classe":0,
+    "classe_label":"-4.6 à -2.5"
+  },
+  {
+    "Code":"973",
+    "Libellé":"Guyane",
+    "tx_evol_pop_2016-2022":7.07,
+    "classe":4,
+    "classe_label":"4.0 à 8.0"
+  },
+  {
+    "Code":"974",
+    "Libellé":"La Réunion",
+    "tx_evol_pop_2016-2022":3.33,
+    "classe":3,
+    "classe_label":"1.9 à 4.0"
+  }
+]
