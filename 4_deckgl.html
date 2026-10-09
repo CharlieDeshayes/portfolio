@@ -1,0 +1,77 @@
+<!DOCTYPE HTML>
+<!--
+	Hyperspace by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Generic - Hyperspace by HTML5 UP</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+	</head>
+	<body class="is-preload">
+
+		<!-- Header -->
+			<header id="header">
+				<a href="index.html" class="title">Webmapping avec DeckGL</a>
+				<nav>
+					<ul>
+						<li><a href="index.html">Accueil</a></li>
+					</ul>
+				</nav>
+			</header>
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Main -->
+					<section id="main" class="wrapper map-section">
+						<div class="inner">
+							<h1 class="major">Cartographier des données spatio-temporelles</h1>
+
+							<div class="map-wrapper">
+								<iframe src="interactives_maps/deck/trips_layer.html" class="map-frame"></iframe>
+							</div>
+							<p>Cette cartographie mobilise différents traitements de données afin de visualiser efficacement les données.
+								En effet, les différentes limites administratives (région, département, commune) ont été converties en tuiles vectorielles (.mbtiles) à l'aide de tippecanoe afin d'optimiser l'affichage.
+								En parrallèle, les informations statistiques ont été récupérés sur l'INSEE (Institut National de la Statistique et des Etudes Economiques). 
+								Ces fichiers ne contiennent que l'information statistique, en l'occurrence, le taux d'évolution des populations entre 2016 et 2022.
+							</p>
+							<p>La cartographie met donc en relation les limites administratives stockées sous forme de tuiles vectorielles et une information statistique provenant de l'INSEE.
+								Cette mise en relation s'effectue directement dans la carte afin de garantir une rapidité et une efficacité d'affichage. Pour ce qui concerne la discrétisation, elle a été effectuée en amont à l'aide d'un script python.
+							</p>
+							
+							<!-- <h1 class="major">Cartographie des cartes de chaleur</h1> -->
+							<!-- <div class="map-wrapper">
+								<iframe src="infra_rennes_mapbox.html" class="map-frame"></iframe>
+							</div>
+							<p>Cette carte interactive mobilise différentes sources de données ouvertes permettant de visualiser les infrastructures de la ville de Rennes. On y trouve des données provenant directement d'une tuile vectorielle générée par Mapbox (les routes et les parcs). Les arrêts de bus et les bâtiments sont issues de tuiles vectorielle mais qui ont été généré par moi-même et hébergé sur Mapbox.</p>
+							<p>Les parcelles cadastrales sont issues d'une tuile vectorielle provenant d'openmaptiles et les lignes et arrêts de métro sont issues de fichier geojson. Le panneau de contrôle permettant de gérer l'affichage ou non de ces données a été conçu pour mobiliser quelques fonctionnalités d'interaction et de rendu offert par Mapbox comme le passage en 3D ou encore le zoom sur une zone pré-définie.</p> -->
+						</div>
+					</section>
+
+			</div>
+
+		<!-- Footer -->
+			<footer id="footer" class="wrapper alt">
+				<div class="inner">
+					<ul class="menu">
+						<li>&copy; Untitled. All rights reserved.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+					</ul>
+				</div>
+			</footer>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.scrollex.min.js"></script>
+			<script src="assets/js/jquery.scrolly.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>
