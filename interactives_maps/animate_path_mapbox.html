@@ -92,7 +92,7 @@ body {
 
 <div id="map"></div>
 <div id="map-title">
-    <img src="../../data/diag_fous/flag_reunion.png" alt="Drapeau de La Réunion">
+    <img src="../data/diag_fous/flag_reunion.png" alt="Drapeau de La Réunion">
     <div>
         <h1>Diagonale des Fous</h1>
         <p>Grand Raid de La Réunion 2026</p>
@@ -113,9 +113,9 @@ body {
 ========================================================= */
 
 Promise.all([
-    fetch('../../data/diag_fous/tracks_diag_des_fous.geojson').then(response => response.json()),
-    fetch('../../data/diag_fous/waypoints_diag_des_fous.geojson').then(response => response.json()),
-    fetch('../../data/diag_fous/profile.json').then(response => response.json())
+    fetch('../data/diag_fous/tracks_diag_des_fous.geojson').then(response => response.json()),
+    fetch('../data/diag_fous/waypoints_diag_des_fous.geojson').then(response => response.json()),
+    fetch('../data/diag_fous/profile.json').then(response => response.json())
 ])
 
 .then(([targetGeoJSON, cameraGeoJSON, profile]) => {
